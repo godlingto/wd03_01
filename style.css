@@ -1,5 +1,27 @@
 /* ==============================
+   색상 변수 정의 (CSS 커스텀 속성)
+   - 다크 모드 색상을 한 곳에 모아 관리합니다.
+   - var(--변수명)으로 어디서든 사용할 수 있습니다.
+============================== */
+:root {
+  --bg-page:    #0d1117;  /* 페이지 전체 배경 (가장 어두운 색) */
+  --bg-card:    #161b22;  /* 카드 배경 (약간 밝은 다크) */
+  --bg-input:   #0d1117;  /* 입력창 배경 */
+  --border:     #30363d;  /* 테두리 색상 */
+  --text-main:  #e6edf3;  /* 기본 텍스트 색상 (밝은 회색) */
+  --text-sub:   #8b949e;  /* 보조 텍스트 색상 (어두운 회색) */
+  --accent:     #58a6ff;  /* 강조색 (GitHub 블루) */
+  --accent-hover: #79c0ff; /* 강조색 hover 상태 */
+  --error:      #f85149;  /* 에러 메시지 색상 (빨간색) */
+  --btn-bg:     #238636;  /* 버튼 배경 (GitHub 그린) */
+  --btn-hover:  #2ea043;  /* 버튼 hover 색상 */
+  --btn-disabled: #3d4450; /* 버튼 비활성화 색상 */
+}
+
+/* ==============================
    전체 기본 초기화
+   - 모든 요소의 padding, margin을 0으로 초기화합니다.
+   - box-sizing: border-box — padding/border가 width에 포함됩니다.
 ============================== */
 * {
   box-sizing: border-box;
@@ -7,156 +29,211 @@
   padding: 0;
 }
 
+/* ==============================
+   body — 페이지 전체 스타일
+============================== */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
   min-height: 100vh;
   padding: 40px 20px;
 }
 
 /* ==============================
-   헤더 (페이지 제목 영역)
+   헤더 — 페이지 제목 영역
 ============================== */
 header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
 }
 
 header h1 {
-  font-size: 2rem;
-  color: #24292f;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
 }
 
 header p {
   margin-top: 8px;
-  color: #666;
-  font-size: 0.95rem;
+  color: var(--text-sub);
+  font-size: 0.9rem;
 }
 
 /* ==============================
-   메인 콘텐츠 영역
+   main — 최대 너비 제한 및 가운데 정렬
 ============================== */
 main {
-  max-width: 1000px;
+  max-width: 1080px;
   margin: 0 auto;
 }
 
 /* ==============================
    검색 영역 (.search-section)
+   - 입력창과 버튼을 가로로 나란히 배치합니다.
 ============================== */
 .search-section {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 24px;
+  display: flex;          /* 가로 방향 배치 */
+  justify-content: center; /* 가운데 정렬 */
+  gap: 8px;               /* 입력창과 버튼 사이 간격 */
+  margin-bottom: 20px;
 }
 
-/* 검색어 입력창 (#searchInput) */
+/* ==============================
+   검색어 입력창 (#searchInput)
+============================== */
 #searchInput {
-  width: 320px;
-  padding: 12px 16px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  width: 360px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 6px;
   outline: none;
   transition: border-color 0.2s;
 }
 
+/* 입력창 포커스 상태 — 테두리를 강조색으로 변경 */
 #searchInput:focus {
-  border-color: #0969da;
+  border-color: var(--accent);
 }
 
-/* 검색 버튼 (#searchButton) */
+/* 입력창 placeholder 텍스트 색상 */
+#searchInput::placeholder {
+  color: var(--text-sub);
+}
+
+/* ==============================
+   검색 버튼 (#searchButton)
+============================== */
 #searchButton {
-  padding: 12px 24px;
-  font-size: 1rem;
-  background-color: #0969da;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-color: var(--btn-bg);
+  color: #ffffff;
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s;
+  white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
 }
 
+/* 버튼 hover 상태 */
 #searchButton:hover {
-  background-color: #0550ae;
+  background-color: var(--btn-hover);
 }
 
+/* 버튼 비활성화 상태 (API 호출 중) */
 #searchButton:disabled {
-  background-color: #999;
+  background-color: var(--btn-disabled);
+  color: var(--text-sub);
   cursor: not-allowed;
 }
 
 /* ==============================
    상태 메시지 영역 (#statusMessage)
+   - 로딩 / 결과 수 / 에러 메시지를 표시합니다.
 ============================== */
 #statusMessage {
   text-align: center;
-  font-size: 0.95rem;
-  min-height: 24px;
-  margin-bottom: 20px;
-  color: #666;
+  font-size: 0.9rem;
+  min-height: 22px;       /* 메시지가 없어도 레이아웃이 흔들리지 않도록 */
+  margin-bottom: 24px;
+  color: var(--text-sub);
 }
 
-/* 에러 상태일 때 클래스 추가 */
+/* 에러 상태 — .error 클래스가 추가될 때 빨간색으로 변경 */
 #statusMessage.error {
-  color: #d1242f;
+  color: var(--error);
 }
 
 /* ==============================
    저장소 카드 목록 (#repoList)
+   - CSS Grid로 카드를 격자 형태로 배치합니다.
+
+   [반응형 전략]
+   - 기본(모바일): 1열
+   - 태블릿 (600px 이상): 2열
+   - 데스크톱 (960px 이상): 3열
 ============================== */
 #repoList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+
+  /* 기본값 — 모바일: 1열 */
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* 태블릿 (화면 너비 600px 이상) — 2열 */
+@media (min-width: 600px) {
+  #repoList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 데스크톱 (화면 너비 960px 이상) — 3열 */
+@media (min-width: 960px) {
+  #repoList {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* ==============================
    개별 저장소 카드 (.repo-card)
 ============================== */
 .repo-card {
-  background-color: #fff;
-  border: 1px solid #d0d7de;
-  border-radius: 12px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 20px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* 내용을 세로 방향으로 배치 */
   gap: 10px;
-  transition: box-shadow 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+/* 카드 hover 상태 — 테두리와 그림자로 입체감 표현 */
 .repo-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(88, 166, 255, 0.15);
 }
 
 /* 저장소 이름 링크 */
 .repo-card .card-title a {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #0969da;
+  color: var(--accent);
   text-decoration: none;
+  word-break: break-word; /* 긴 이름이 카드를 넘지 않도록 */
 }
 
 .repo-card .card-title a:hover {
+  color: var(--accent-hover);
   text-decoration: underline;
 }
 
 /* 저장소 설명 */
 .repo-card .card-description {
-  font-size: 0.9rem;
-  color: #555;
-  line-height: 1.5;
-  flex-grow: 1;
+  font-size: 0.875rem;
+  color: var(--text-sub);
+  line-height: 1.6;
+  flex-grow: 1; /* 설명이 짧아도 카드 높이를 균일하게 유지 */
 }
 
-/* star 수 / 언어 정보 */
+/* star 수 / 언어 정보 영역 */
 .repo-card .card-meta {
   display: flex;
   gap: 16px;
-  font-size: 0.85rem;
-  color: #666;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+  border-top: 1px solid var(--border); /* 구분선 */
+  padding-top: 10px;
+  margin-top: auto; /* 카드 하단에 고정 */
 }
 
 .repo-card .card-meta span {
