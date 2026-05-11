@@ -52,8 +52,8 @@ main {
   margin-bottom: 24px;
 }
 
-/* 검색어 입력창 (#search-input) */
-#search-input {
+/* 검색어 입력창 (#searchInput) */
+#searchInput {
   width: 320px;
   padding: 12px 16px;
   font-size: 1rem;
@@ -63,12 +63,12 @@ main {
   transition: border-color 0.2s;
 }
 
-#search-input:focus {
+#searchInput:focus {
   border-color: #0969da;
 }
 
-/* 검색 버튼 (#search-btn) */
-#search-btn {
+/* 검색 버튼 (#searchButton) */
+#searchButton {
   padding: 12px 24px;
   font-size: 1rem;
   background-color: #0969da;
@@ -79,19 +79,19 @@ main {
   transition: background-color 0.2s;
 }
 
-#search-btn:hover {
+#searchButton:hover {
   background-color: #0550ae;
 }
 
-#search-btn:disabled {
+#searchButton:disabled {
   background-color: #999;
   cursor: not-allowed;
 }
 
 /* ==============================
-   상태 메시지 영역 (#status-message)
+   상태 메시지 영역 (#statusMessage)
 ============================== */
-#status-message {
+#statusMessage {
   text-align: center;
   font-size: 0.95rem;
   min-height: 24px;
@@ -100,14 +100,14 @@ main {
 }
 
 /* 에러 상태일 때 클래스 추가 */
-#status-message.error {
+#statusMessage.error {
   color: #d1242f;
 }
 
 /* ==============================
-   저장소 카드 목록 (#repo-list)
+   저장소 카드 목록 (#repoList)
 ============================== */
-#repo-list {
+#repoList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;

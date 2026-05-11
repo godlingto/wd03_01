@@ -3,10 +3,10 @@
 // ============================================================
 
 // ① DOM 요소를 id로 가져오기
-const searchInput   = document.getElementById('search-input');   // 검색어 입력창
-const searchBtn     = document.getElementById('search-btn');     // 검색 버튼
-const statusMessage = document.getElementById('status-message'); // 상태 메시지 영역
-const repoList      = document.getElementById('repo-list');      // 카드 목록 영역
+const searchInput   = document.getElementById('searchInput');   // 검색어 입력창
+const searchBtn     = document.getElementById('searchButton');  // 검색 버튼
+const statusMessage = document.getElementById('statusMessage'); // 상태 메시지 영역
+const repoList      = document.getElementById('repoList');      // 카드 목록 영역
 
 
 // ② GitHub 저장소 검색 URL을 만드는 함수

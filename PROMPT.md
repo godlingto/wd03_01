@@ -199,7 +199,38 @@ function handleSearch() {
 
 ---
 
-## 📁 생성된 파일 목록
+## 📌 프롬프트 5 — id 네이밍 통일 (camelCase)
+
+### 사용자 요청
+
+> 결과 목록 영역의 id를 repoList로 고정하고, 상태 메시지 영역의 id를 statusMessage로 고정해서 다시 작성해 주세요.
+>
+> 추가 조건:
+> 1. 입력창 id는 searchInput으로 해 주세요.
+> 2. 버튼 id는 searchButton으로 해 주세요.
+> 3. JavaScript에서 선택하기 쉽게 구조를 단순하게 유지해 주세요.
+
+### 응답 요약
+
+`index.html`, `style.css`, `app.js` 3개 파일의 id를 kebab-case에서 camelCase로 통일함.
+
+**변경된 id 목록:**
+
+| 변경 전 | 변경 후 | 해당 요소 |
+|---|---|---|
+| `search-input` | `searchInput` | 검색어 입력창 |
+| `search-btn` | `searchButton` | 검색 버튼 |
+| `status-message` | `statusMessage` | 상태 메시지 영역 |
+| `repo-list` | `repoList` | 카드 목록 영역 |
+
+**수정된 파일:**
+- `index.html` — `id` 속성값 4개 변경
+- `style.css` — id 셀렉터(`#searchInput`, `#searchButton`, `#statusMessage`, `#repoList`) 변경
+- `app.js` — `getElementById()` 인자 4개 변경
+
+---
+
+##  생성된 파일 목록
 
 | 파일명 | 설명 |
 |---|---|
