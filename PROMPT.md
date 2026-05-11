@@ -309,6 +309,60 @@ searchInput.addEventListener('keydown', function (e) {
 
 ---
 
+## 📌 프롬프트 8 — 버튼 클릭 시 입력값 읽기 (기초 학습)
+
+### 사용자 요청
+
+> 순수 JavaScript로 검색 버튼 클릭 시 입력창의 값을 읽는 코드를 작성해 주세요.
+>
+> 조건:
+> 1. input의 id는 searchInput입니다.
+> 2. button의 id는 searchButton입니다.
+> 3. 상태 메시지 영역의 id는 statusMessage입니다.
+> 4. 입력값 앞뒤 공백을 제거합니다.
+> 5. 입력값이 비어 있으면 상태 메시지에 "검색어를 입력해 주세요."라고 표시합니다.
+> 6. 입력값이 있으면 console.log로 검색어를 출력합니다.
+> 7. 초보자가 이해할 수 있도록 주석을 달아 주세요.
+
+### 응답 요약
+
+현재 `app.js`의 `handleSearch()` 함수에 이미 동일한 로직이 포함되어 있음. 핵심 패턴을 분리하여 설명함.
+
+**핵심 코드 패턴:**
+```javascript
+// ① 버튼과 입력창, 상태 메시지 요소를 id로 가져옵니다.
+const searchButton  = document.getElementById('searchButton');
+const searchInput   = document.getElementById('searchInput');
+const statusMessage = document.getElementById('statusMessage');
+
+// ② 버튼 클릭 이벤트를 등록합니다.
+searchButton.addEventListener('click', function () {
+
+  // ③ 입력창의 값을 읽고, 앞뒤 공백을 제거합니다.
+  const keyword = searchInput.value.trim();
+
+  // ④ 입력값이 비어 있는지 확인합니다.
+  if (keyword === '') {
+    statusMessage.textContent = '검색어를 입력해 주세요.';
+  } else {
+    statusMessage.textContent = '';
+    console.log('검색어:', keyword);
+  }
+});
+```
+
+**포인트 정리:**
+
+| 코드 | 역할 |
+|---|---|
+| `getElementById('id명')` | HTML 요소를 JavaScript로 가져오기 |
+| `.value` | `<input>`에 입력된 텍스트 값 |
+| `.trim()` | 문자열 앞뒤 공백 제거 |
+| `.textContent` | 요소 안의 텍스트를 읽거나 변경 |
+| `addEventListener('click', fn)` | 클릭 시 함수 실행 등록 |
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |
