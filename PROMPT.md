@@ -406,6 +406,65 @@ searchInput.addEventListener('keydown', function (e) {
 
 ---
 
+## 📌 프롬프트 10 — fetchRepos async/await 함수 작성
+
+### 사용자 요청
+
+> GitHub Repository Search API를 호출하는 fetchRepos 함수를 작성해 주세요.
+>
+> 조건:
+> 1. 함수 이름은 fetchRepos입니다.
+> 2. keyword를 매개변수로 받습니다.
+> 3. fetch와 async/await를 사용합니다.
+> 4. 검색어는 encodeURIComponent로 처리합니다.
+> 5. stars 기준 내림차순으로 정렬합니다.
+> 6. 결과는 6개만 가져옵니다.
+> 7. response.ok를 확인합니다.
+> 8. 실패하면 throw new Error를 사용합니다.
+> 9. JSON 데이터를 return합니다.
+> 10. 초보자가 이해할 수 있도록 주석을 달아 주세요.
+
+### 응답 요약
+
+`app.js`에 `fetchRepos` 함수를 추가하고, `handleSearch`도 `async/await` 방식으로 교체함.
+
+**`fetchRepos` 함수:**
+```javascript
+async function fetchRepos(keyword) {
+  const encodedKeyword = encodeURIComponent(keyword);
+  const url = `https://api.github.com/search/repositories?q=${encodedKeyword}&sort=stars&order=desc&per_page=6`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`API 요청 실패: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+}
+```
+
+**변경 전 vs 변경 후 비교:**
+
+| 항목 | 변경 전 | 변경 후 |
+|---|---|---|
+| API 호출 방식 | `.then().catch()` 체인 | `async/await` + `try/catch` |
+| fetch 로직 위치 | `handleSearch` 내부 | `fetchRepos` 함수로 분리 |
+| 에러 처리 | `.catch(error => ...)` | `catch (error) { ... }` |
+
+**포인트 정리:**
+
+| 키워드 | 의미 |
+|---|---|
+| `async` | 이 함수는 비동기 함수 (Promise를 반환) |
+| `await` | 비동기 작업이 완료될 때까지 기다림 |
+| `response.ok` | HTTP 상태 코드 200~299이면 `true` |
+| `throw new Error(...)` | 에러 객체를 생성하고 던짐 → `catch`로 잡힘 |
+| `try / catch` | 에러가 발생할 수 있는 코드를 안전하게 감쌈 |
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |

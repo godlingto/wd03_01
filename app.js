@@ -9,17 +9,33 @@ const statusMessage = document.getElementById('statusMessage'); // 상태 메시
 const repoList      = document.getElementById('repoList');      // 카드 목록 영역
 
 
-// ② GitHub 저장소 검색 URL을 만드는 함수
-function buildSearchUrl(keyword) {
-  // encodeURIComponent: 공백이나 특수문자를 URL에서 사용할 수 있는 형태로 변환
+// ② GitHub 저장소를 검색하고 결과 데이터를 반환하는 비동기 함수
+// async 키워드 : 이 함수는 비동기 함수입니다. (결과를 기다려야 합니다)
+async function fetchRepos(keyword) {
+
+  // 검색어를 URL에서 안전하게 사용할 수 있도록 인코딩합니다.
+  // 예) "hello world" → "hello%20world"
   const encodedKeyword = encodeURIComponent(keyword);
 
-  // template literal로 URL 문자열 조립
+  // GitHub 저장소 검색 URL을 template literal로 조립합니다.
   // q        : 검색어
   // sort     : 정렬 기준 (stars = 별점 수)
   // order    : 정렬 방향 (desc = 내림차순)
   // per_page : 결과 개수 (6개로 제한)
-  return `https://api.github.com/search/repositories?q=${encodedKeyword}&sort=stars&order=desc&per_page=6`;
+  const url = `https://api.github.com/search/repositories?q=${encodedKeyword}&sort=stars&order=desc&per_page=6`;
+
+  // await : fetch가 완료될 때까지 기다립니다.
+  const response = await fetch(url);
+
+  // response.ok : HTTP 상태 코드가 200~299 사이면 true
+  // 실패한 경우 (404, 500 등) 에러를 발생시킵니다.
+  if (!response.ok) {
+    throw new Error(`API 요청 실패: ${response.status}`);
+  }
+
+  // 응답 본문을 JSON 형식으로 변환하고 반환합니다.
+  const data = await response.json();
+  return data;
 }
 
 
@@ -60,8 +76,8 @@ function createRepoCard(repo) {
 }
 
 
-// ⑤ 검색 실행 함수
-function handleSearch() {
+// ⑤ 검색 실행 함수 (async/await 방식으로 fetchRepos 호출)
+async function handleSearch() {
   // 입력창의 값을 가져와 앞뒤 공백 제거
   const keyword = searchInput.value.trim();
 
@@ -76,35 +92,30 @@ function handleSearch() {
   setStatus('⏳ 검색 중...');           // 로딩 메시지
   searchBtn.disabled = true;            // 중복 클릭 방지
 
-  // GitHub API 호출
-  const url = buildSearchUrl(keyword);
+  // try : 정상 실행 시도
+  // catch : 오류 발생 시 처리
+  try {
+    // fetchRepos를 호출하고 결과가 올 때까지 기다립니다.
+    const data = await fetchRepos(keyword);
 
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`API 오류: ${response.status}`);
-      }
-      return response.json(); // 응답을 JSON으로 변환
-    })
-    .then(data => {
-      searchBtn.disabled = false; // 버튼 다시 활성화
+    searchBtn.disabled = false; // 버튼 다시 활성화
 
-      if (data.items.length === 0) {
-        setStatus('검색 결과가 없습니다.', 'error');
-        return;
-      }
+    if (data.items.length === 0) {
+      setStatus('검색 결과가 없습니다.', 'error');
+      return;
+    }
 
-      // 결과 카드 렌더링
-      setStatus(`"${keyword}" 검색 결과: ${data.items.length}개`);
-      data.items.forEach(repo => {
-        repoList.appendChild(createRepoCard(repo));
-      });
-    })
-    .catch(error => {
-      // 네트워크 오류 또는 API 오류 처리
-      searchBtn.disabled = false;
-      setStatus(`오류가 발생했습니다: ${error.message}`, 'error');
+    // 결과 카드 렌더링
+    setStatus(`"${keyword}" 검색 결과: ${data.items.length}개`);
+    data.items.forEach(repo => {
+      repoList.appendChild(createRepoCard(repo));
     });
+
+  } catch (error) {
+    // 네트워크 오류 또는 API 오류 처리
+    searchBtn.disabled = false;
+    setStatus(`오류가 발생했습니다: ${error.message}`, 'error');
+  }
 }
 
 
