@@ -1,0 +1,166 @@
+/* ==============================
+   전체 기본 초기화
+============================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* ==============================
+   헤더 (페이지 제목 영역)
+============================== */
+header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #24292f;
+}
+
+header p {
+  margin-top: 8px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* ==============================
+   메인 콘텐츠 영역
+============================== */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ==============================
+   검색 영역 (.search-section)
+============================== */
+.search-section {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+/* 검색어 입력창 (#search-input) */
+#search-input {
+  width: 320px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#search-input:focus {
+  border-color: #0969da;
+}
+
+/* 검색 버튼 (#search-btn) */
+#search-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #0969da;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#search-btn:hover {
+  background-color: #0550ae;
+}
+
+#search-btn:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* ==============================
+   상태 메시지 영역 (#status-message)
+============================== */
+#status-message {
+  text-align: center;
+  font-size: 0.95rem;
+  min-height: 24px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+/* 에러 상태일 때 클래스 추가 */
+#status-message.error {
+  color: #d1242f;
+}
+
+/* ==============================
+   저장소 카드 목록 (#repo-list)
+============================== */
+#repo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ==============================
+   개별 저장소 카드 (.repo-card)
+============================== */
+.repo-card {
+  background-color: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s;
+}
+
+.repo-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 저장소 이름 링크 */
+.repo-card .card-title a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0969da;
+  text-decoration: none;
+}
+
+.repo-card .card-title a:hover {
+  text-decoration: underline;
+}
+
+/* 저장소 설명 */
+.repo-card .card-description {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+/* star 수 / 언어 정보 */
+.repo-card .card-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.repo-card .card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

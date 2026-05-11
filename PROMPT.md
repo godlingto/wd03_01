@@ -2,7 +2,7 @@
 
 > **작업 일시:** 2026년 5월 11일  
 > **작업 목적:** GitHub REST API를 사용해 저장소를 검색하는 URL 생성 및 HTML 인터페이스 구현  
-> **생성 파일:** `searchRepositories.js`, `index.html`
+> **생성 파일:** `searchRepositories.js`, `index.html`, `style.css`, `app.js`, `PROMPT.md`
 
 ---
 
@@ -153,12 +153,60 @@ function handleSearch() {
 
 ---
 
+## 📌 프롬프트 4 — HTML/CSS/JS 파일 분리 구조로 재작성
+
+### 사용자 요청
+
+> 순수 HTML/CSS/JavaScript로 GitHub Repository Search Board 앱의 기본 HTML 구조를 작성해 주세요.
+>
+> 조건:
+> 1. 검색어 입력창이 있어야 합니다.
+> 2. 검색 버튼이 있어야 합니다.
+> 3. 상태 메시지 영역이 있어야 합니다.
+> 4. 저장소 카드 목록을 보여줄 영역이 있어야 합니다.
+> 5. JavaScript에서 선택하기 쉽도록 id를 명확히 붙여 주세요.
+> 6. CSS는 style.css, JavaScript는 app.js로 분리해 주세요.
+
+### 응답 요약
+
+3개 파일로 역할을 분리하여 재구성함.
+
+**파일 역할 분리:**
+
+| 파일 | 역할 |
+|---|---|
+| `index.html` | HTML 구조 전담 — `style.css`, `app.js` 연결 |
+| `style.css` | 모든 스타일 전담 |
+| `app.js` | 모든 JavaScript 로직 전담 |
+
+**`index.html` 주요 id 구성:**
+
+| id | 요소 | 역할 |
+|---|---|---|
+| `search-input` | `<input>` | 검색어 입력창 |
+| `search-btn` | `<button>` | 검색 버튼 |
+| `status-message` | `<p>` | 로딩 / 에러 / 안내 메시지 |
+| `repo-list` | `<div>` | 저장소 카드 목록 렌더링 영역 |
+
+**`app.js` 주요 함수:**
+
+| 함수 | 역할 |
+|---|---|
+| `buildSearchUrl(keyword)` | template literal로 API URL 생성 |
+| `setStatus(message, type)` | 상태 메시지 표시 및 에러 색상 전환 |
+| `createRepoCard(repo)` | 저장소 카드 DOM 생성 |
+| `handleSearch()` | 검색 실행 (로딩 → fetch → 카드 렌더링) |
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |
 |---|---|
 | `searchRepositories.js` | `buildSearchUrl()` 함수 및 fetch 사용 예시 |
-| `index.html` | GitHub 저장소 검색 UI (입력 → API 호출 → 카드 렌더링) |
+| `index.html` | HTML 구조 (검색 입력창, 버튼, 상태 메시지, 카드 목록 영역) |
+| `style.css` | 레이아웃, 카드 디자인, 반응형 스타일 |
+| `app.js` | URL 생성, fetch 호출, 카드 렌더링, 이벤트 리스너 |
 | `PROMPT.md` | 프롬프트 진행 내용 기록 (현재 파일) |
 
 ---
