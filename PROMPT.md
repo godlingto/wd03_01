@@ -270,6 +270,45 @@ function handleSearch() {
 
 ---
 
+## 📌 프롬프트 7 — 검색 결과 6개 초과 버그 수정
+
+### 사용자 요청
+
+> 검색결과 6개 이상 출력이 되는데 확인해보세요.
+
+### 원인 분석
+
+`Enter` 키 이벤트 리스너가 버튼의 `disabled` 상태를 확인하지 않아 검색이 **중복 실행**되는 버그.
+
+**버그 시나리오:**
+1. Enter 키 → `handleSearch()` 실행 → `searchBtn.disabled = true`
+2. API 응답 대기 중 Enter 키를 다시 누름
+3. `disabled` 체크 없이 `handleSearch()` 재실행 → `repoList.innerHTML = ''` 후 두 번째 fetch 시작
+4. 첫 번째 fetch 완료 → 6개 카드 추가
+5. 두 번째 fetch 완료 → 6개 카드 추가 → **총 12개 표시**
+
+### 수정 내용
+
+`app.js` — Enter 키 이벤트에 `!searchBtn.disabled` 조건 추가
+
+```javascript
+// 수정 전
+searchInput.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') {
+    handleSearch();
+  }
+});
+
+// 수정 후
+searchInput.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && !searchBtn.disabled) {  // ← disabled 체크 추가
+    handleSearch();
+  }
+});
+```
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |

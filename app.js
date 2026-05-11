@@ -113,8 +113,9 @@ function handleSearch() {
 searchBtn.addEventListener('click', handleSearch);
 
 // Enter 키를 눌러도 검색 실행
+// searchBtn.disabled가 true(검색 중)일 때는 실행하지 않아 중복 검색을 방지합니다.
 searchInput.addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
+  if (e.key === 'Enter' && !searchBtn.disabled) {
     handleSearch();
   }
 });
