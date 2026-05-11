@@ -363,6 +363,49 @@ searchButton.addEventListener('click', function () {
 
 ---
 
+## 📌 프롬프트 9 — Enter 키 검색 실행 보완
+
+### 사용자 요청
+
+> Enter 키를 눌렀을 때도 검색이 실행되도록 코드를 보완해 주세요.
+>
+> 조건:
+> 1. 기존 검색 버튼 클릭 기능은 유지합니다.
+> 2. 입력창에서 Enter 키를 누르면 같은 검색 함수가 실행되게 합니다.
+> 3. 중복 코드를 줄이기 위해 handleSearch 함수를 분리해 주세요.
+> 4. 초보자가 이해할 수 있도록 주석을 달아 주세요.
+
+### 응답 요약
+
+현재 `app.js`에 이미 모든 조건이 구현되어 있음을 확인함. 추가 수정 없음.
+
+**조건 충족 확인:**
+
+| 조건 | 코드 | 상태 |
+|---|---|---|
+| 버튼 클릭 기능 유지 | `searchBtn.addEventListener('click', handleSearch)` | ✅ |
+| Enter 키로 같은 함수 실행 | `if (e.key === 'Enter' && !searchBtn.disabled) handleSearch()` | ✅ |
+| `handleSearch` 함수 분리 | `function handleSearch() { ... }` 별도 선언 | ✅ |
+| 초보자용 주석 | 각 블록에 한국어 주석 포함 | ✅ |
+
+**관련 코드 (`app.js`):**
+```javascript
+// 공통 검색 함수 — 버튼 클릭과 Enter 키 모두 이 함수를 공유합니다.
+function handleSearch() { ... }
+
+// 버튼 클릭 이벤트
+searchBtn.addEventListener('click', handleSearch);
+
+// Enter 키 이벤트 — 검색 중(disabled)일 때는 중복 실행 방지
+searchInput.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && !searchBtn.disabled) {
+    handleSearch();
+  }
+});
+```
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |
