@@ -465,6 +465,40 @@ async function fetchRepos(keyword) {
 
 ---
 
+## 📌 프롬프트 11 — API 응답 필드 정리 및 카드에 Fork 수 추가
+
+### 사용자 요청
+
+> GitHub Repository Search API 응답의 items 배열에서 저장소 카드에 표시할 필드를 정리해 주세요.
+> description, language가 null일 때 사용할 기본 문구도 제안해 주세요.
+
+### 응답 요약
+
+**카드 항목 ↔ JSON 필드 매핑:**
+
+| 카드 표시 항목 | JSON 필드명 | null 가능 |
+|---|---|---|
+| 저장소 이름 | `full_name` | ❌ |
+| 저장소 설명 | `description` | ✅ → `'설명이 없습니다.'` |
+| 사용 언어 | `language` | ✅ → `'언어 정보 없음'` |
+| ⭐ Star 수 | `stargazers_count` | ❌ |
+| 🍴 Fork 수 | `forks_count` | ❌ |
+| GitHub 링크 | `html_url` | ❌ |
+
+**수정 내용 (`app.js` — `createRepoCard`):**
+- `forks_count` 카드에 추가
+- `??` (nullish coalescing) 연산자로 null 처리 방식 개선
+- 변수로 분리하여 가독성 향상
+
+```javascript
+const description = repo.description ?? '설명이 없습니다.';
+const language    = repo.language    ?? '언어 정보 없음';
+const stars       = repo.stargazers_count.toLocaleString();
+const forks       = repo.forks_count.toLocaleString();
+```
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |

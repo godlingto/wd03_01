@@ -58,17 +58,23 @@ function createRepoCard(repo) {
   const card = document.createElement('div');
   card.className = 'repo-card';
 
+  // null 처리: description, language가 없을 때 기본 문구를 사용합니다.
+  // ?? (nullish coalescing): 값이 null 또는 undefined일 때만 오른쪽 기본값을 사용합니다.
+  const description = repo.description ?? '설명이 없습니다.';
+  const language    = repo.language    ?? '언어 정보 없음';
+  const stars       = repo.stargazers_count.toLocaleString(); // 숫자에 쉼표 추가 (예: 12,345)
+  const forks       = repo.forks_count.toLocaleString();
+
   // 카드 내부 HTML 구성
   card.innerHTML = `
     <div class="card-title">
       <a href="${repo.html_url}" target="_blank">${repo.full_name}</a>
     </div>
-    <p class="card-description">
-      ${repo.description ? repo.description : '설명이 없습니다.'}
-    </p>
+    <p class="card-description">${description}</p>
     <div class="card-meta">
-      <span>⭐ ${repo.stargazers_count.toLocaleString()}</span>
-      <span>🌐 ${repo.language ? repo.language : '알 수 없음'}</span>
+      <span>⭐ ${stars}</span>
+      <span>🍴 ${forks}</span>
+      <span>🌐 ${language}</span>
     </div>
   `;
 
