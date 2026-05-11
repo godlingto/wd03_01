@@ -499,6 +499,49 @@ const forks       = repo.forks_count.toLocaleString();
 
 ---
 
+## 📌 프롬프트 12 — renderRepos 함수 분리 및 handleSearch 리팩토링
+
+### 사용자 요청
+
+> handleSearch 함수에서 fetchRepos로 가져온 데이터의 items 배열을 renderRepos 함수에 전달하도록 코드를 수정해 주세요.
+>
+> 조건:
+> 1. const data = await fetchRepos(keyword)를 사용합니다.
+> 2. renderRepos(data.items)를 호출합니다.
+> 3. 검색 결과가 있으면 카드 목록이 화면에 표시되어야 합니다.
+> 4. 기존 입력값 검증 기능은 유지합니다.
+> 5. 오류 처리는 console.error로 유지합니다.
+
+### 응답 요약
+
+`renderRepos(items)` 함수를 신규 추가하고 `handleSearch`에서 호출하도록 수정함.
+
+**추가된 함수:**
+```javascript
+function renderRepos(items) {
+  items.forEach(repo => {
+    repoList.appendChild(createRepoCard(repo));
+  });
+}
+```
+
+**변경된 handleSearch 핵심 흐름:**
+```javascript
+const data = await fetchRepos(keyword);  // API 호출
+renderRepos(data.items);                 // items 배열 렌더링
+```
+
+**함수 역할 분리:**
+
+| 함수 | 역할 |
+|---|---|
+| `fetchRepos(keyword)` | API 호출 → JSON 반환 |
+| `renderRepos(items)` | items 배열 → 카드 DOM 렌더링 |
+| `createRepoCard(repo)` | 개별 repo → 카드 DOM 생성 |
+| `handleSearch()` | 흐름 제어 (검증 → fetch → render) |
+
+---
+
 ## 📁 생성된 파일 목록
 
 | 파일명 | 설명 |
